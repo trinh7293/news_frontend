@@ -1,9 +1,8 @@
 <template>
   <div>
-    <p>{{msg}}</p>
     <ul>
       <new-item
-        v-for= 'item in newList'
+        v-for= 'item in allPosts'
         v-bind:newItem = 'item'
         v-bind:key = 'item.id'
       ></new-item>
@@ -16,7 +15,7 @@
 //   template: '<li>This is a todo</li>'
 // })
 import Vue from 'vue'
-import {get24hNews} from '../database/firebase'
+import { getAllPosts } from '../vuex/actions'
 
 Vue.component('new-item', {
   props: ['newItem'],
@@ -24,12 +23,16 @@ Vue.component('new-item', {
 })
 
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-      newList: get24hNews()
+  vuex: {
+    getters: {
+      allPosts: ({news}) => news.allPosts
+    },
+    actions: {
+      getAllPosts
     }
+  },
+  created () {
+    // this.getAllPosts()
   }
 }
 </script>

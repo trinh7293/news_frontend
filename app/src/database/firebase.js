@@ -13,9 +13,9 @@ const settings = { timestampsInSnapshots: true }
 firestore.settings(settings)
 // const db = firebase.firestore()
 
-let get24hNews = () => {
+let getNews = cb => {
   let newList = []
-  firestore.collection('24h_news')
+  firestore.collection('news')
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
@@ -31,6 +31,27 @@ let get24hNews = () => {
     .catch(err => {
       console.log('Error getting documents', err)
     })
-  return newList
+  cb(newList)
 }
-export { get24hNews }
+
+// let getNews = (source, cb) => {
+//   let newList = []
+//   firestore.collection(source)
+//     .get()
+//     .then(snapshot => {
+//       if (snapshot.empty) {
+//         console.log('No matching documents.')
+//         return
+//       }
+//       // let newList = []
+//       snapshot.forEach(doc => {
+//         // console.log(doc.id, '=>', doc.data())
+//         newList.push(doc.data())
+//       })
+//     })
+//     .catch(err => {
+//       console.log('Error getting documents', err)
+//     })
+//     cb(newList)
+// }
+export { getNews }
